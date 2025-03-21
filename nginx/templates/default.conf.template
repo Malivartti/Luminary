@@ -1,0 +1,19 @@
+server {
+    listen 80;
+    server_name _;
+    include /etc/nginx/mime.types;
+    sendfile on;
+    charset     utf8;
+    autoindex   off;
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+
+    location ~ ^/(admin|api)/?(.*)$ {
+        proxy_pass http://backend:8000; # gunicorn запускается в контейнере python и слушает порт 8000
+        proxy_set_header Host $host;
+    }
+
+    location /static {
+        alias /static;
+    }
+}

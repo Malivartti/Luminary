@@ -2,32 +2,59 @@ name: luminary
 version: '3.9'
 
 services:
-  django:
+  backend_builder:
     build:
       context: ./backend
-    image: luminary-django
-    container_name: django_app
-    restart: always
+      dockerfile: Dockerfile
+    image: luminary_backend_builder
+    container_name: luminary_backend_builder
+    restart: no
     working_dir: /backend
     command: >
       sh -c "
       python manage.py migrate --noinput &&
-      python manage.py runserver 0.0.0.0:8000
+      python manage.py collectstatic --noinput
+      "
+    volumes:
+      - backend_staticfiles:/staticfiles
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    env_file:
+      - .env
+
+  backend:
+    build:
+      context: ./backend
+    image: luminary_backend
+    container_name: luminary_backend
+    restart: always
+    working_dir: /backend
+    command: >
+      sh -c "
+      gunicorn base.wsgi:application --bind 0.0.0.0:8000
       "
     ports:
       - "8000:8000"
     depends_on:
-      - postgres
-      - redis
+      backend_builder:
+        condition: service_completed_successfully
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
     env_file:
       - .env
     volumes:
       - environments_data:/backend/environments
+      - backend_staticfiles:/staticfiles
       - ./backend:/backend
 
   postgres:
     image: postgres:17
-    container_name: postgres_db
+    container_name: luminary_postgres
     restart: always
     ports:
       - "1234:5432"
@@ -35,10 +62,15 @@ services:
       - .env
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $POSTGRES_USER -d $POSTGRES_DB"] 
+      interval: 2s
+      timeout: 2s
+      retries: 6
   
   redis:
     image: redis:7.4
-    container_name: redis_db
+    container_name: luminary_redis
     restart: always
     ports:
       - "6379:6379"
@@ -46,8 +78,31 @@ services:
       - .env
     volumes:
       - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 2s
+      timeout: 2s
+      retries: 6
+
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    container_name: luminary_nginx
+    image: luminary_nginx
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - backend_staticfiles:/static
+    depends_on:
+      backend:
+        condition: service_started
 
 volumes:
   environments_data:
   postgres_data:
+  backend_staticfiles:
   redis_data:

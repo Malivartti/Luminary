@@ -1,5 +1,6 @@
 from openai import OpenAI
 import redis
+import os
 
 from .base import once, Singleton
 
@@ -16,10 +17,14 @@ class RedisConnection:
     Класс подключения Redis
     """
     @once
-    def __init__(self, host: str, port: int):
+    def __init__(self):
         self.client = None
         try:
-            self.client = redis.Redis(host=host, port=port, decode_responses=True)
+            self.client = redis.Redis(
+                host=os.getenv("REDIS_HOST"),
+                port=os.getenv("REDIS_PORT"), 
+                decode_responses=True
+                )
             self.client.ping()
         except redis.exceptions.ConnectionError as e:
             print(f"Error connecting to Redis: {e}")
@@ -39,10 +44,9 @@ class GPTConnection(Connection):
     model: str = None
 
     @once
-    def __init__(self, api_key: str, url: str, model: str = ''):
+    def __init__(self):
         self.client = OpenAI(
-            api_key=api_key,
-            base_url=url,
+            api_key=os.getenv("OPENAI_API_KEY"),
+            base_url=os.getenv("OPENAI_API_URL"),
             timeout=30
         )
-        self.model = model

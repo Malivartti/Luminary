@@ -10,6 +10,6 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Монтируется Volume с кодом в docker-compose
-# COPY . .
+COPY . .
 
 EXPOSE 8000
