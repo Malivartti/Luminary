@@ -12,6 +12,7 @@ services:
     working_dir: /backend
     command: >
       sh -c "
+      python manage.py makemigrations --no-input &&
       python manage.py migrate --noinput &&
       python manage.py collectstatic --noinput
       "
