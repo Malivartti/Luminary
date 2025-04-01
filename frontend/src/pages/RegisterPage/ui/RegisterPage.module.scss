@@ -1,0 +1,50 @@
+.RegisterPage {
+  display: flex;
+  justify-content: center;
+  padding-top: var(--page-padding-top);
+  padding-bottom: var(--page-padding-bottom);
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 500px;
+  }
+
+  &__avatar {
+    display: inline-block;
+    max-width: 50%;
+    padding-bottom: 50%;
+    background-color: var(--skeleton-base-color);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    transform: translateX(50%);
+    margin-bottom: 10px;
+    transition: background var(--transition-color-ms) linear;
+  }
+
+  &__input {
+    margin-bottom: 10px;
+  }
+
+  &__title {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  &__sign-in {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    align-self: center;
+    color: var(--secondary-color);
+
+    &:hover {
+      background: none;
+    }
+  }
+
+  &__btn {
+    align-self: center;
+  }
+}

@@ -1,0 +1,63 @@
+.Text {
+  transition: color var(--transition-color-ms) linear;
+  
+  &_view-title {
+    font-size: 44px;
+    line-height: 48px;
+    font-weight: 700;
+  }
+
+  &_view-button {
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  &_view-p-32 {
+    font-size: 32px;
+    line-height: 48px;
+  }
+
+  &_view-p-20 {
+    font-size: 20px;
+    line-height: 24px;
+  }
+
+  &_view-p-18 {
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  &_view-p-16 {
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  &_view-p-14 {
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  &_weight-normal {
+    font-weight: 400;
+  }
+
+  &_weight-medium {
+    font-weight: 500;
+  }
+
+  &_weight-bold {
+    font-weight: 700;
+  }
+
+  &_color-primary {
+    color: var(--primary-color);
+  }
+
+  &_color-secondary {
+    color: var(--secondary-color);
+  }
+
+  &_color-accent {
+    color: var(--brand-color);
+  }
+}

@@ -1,0 +1,12 @@
+.Editor {
+  height: calc(100vh - 42px - var(--navbar-height));
+
+  &__custom {
+    margin-left: auto;
+    width: auto !important;
+  }
+
+  &__enable {
+    color: #06c;
+  }
+}

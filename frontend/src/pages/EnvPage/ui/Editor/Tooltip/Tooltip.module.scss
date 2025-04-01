@@ -1,0 +1,114 @@
+.Tooltip {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  background-color: var(--bg-color); // Более светлый фон
+  border: 1px solid var(--dark-bg-color); // Тонкая граница
+  border-radius: 8px; // Скругленные углы
+  padding: 10px; // Увеличенный отступ
+  z-index: 11;
+  transform: translateX(-50%);
+  width: 320px; // Немного шире
+  box-shadow: 0 4px 10px rgb(0 0 0 / 25%);
+
+  select {
+    margin-bottom: 8px;
+    padding: 8px;
+    border: 1px solid var(--inverted-bg-color);
+    border-radius: 4px;
+    background-color: var(--bg-color);
+    color: var(--primary-color);
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+
+    &:hover {
+      border-color: var(--brand-hover-color);
+    }
+
+    &:focus {
+      outline: none;
+      border-color: var(--brand-color);
+      box-shadow: 0 0 3px var(--brand-color);
+    }
+
+    &:not(:last-child) {
+      margin-right: 15px;
+    }
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px; // Отступ перед результатом
+  }
+
+  input {
+    padding: 8px;
+    border: 1px solid var(--inverted-bg-color);
+    border-radius: 4px;
+    margin-bottom: 8px;
+    background-color: var(--bg-color);
+    color: var(--primary-color);
+
+    &:focus {
+      outline: none;
+      border-color: var(--brand-color);
+      box-shadow: 0 0 3px var(--brand-color);
+    }
+  }
+
+  &__gen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 16px;
+    color: var(--primary-color);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-weight: 500;
+
+    &:hover {
+      background-color: var(--brand-hover-color);
+    }
+
+    svg {
+      margin-left: 5px;
+    }
+  }
+
+  &__response {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid var(--inverted-bg-color);
+    border-radius: 4px;
+    background-color: var(--bg-color);
+    color: var(--primary-color);
+    word-break: break-word; // Перенос длинных слов
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: space-between;
+
+    button {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      font-weight: 500;
+
+      &:first-child {
+        background-color: var(--brand-color);
+        color: var(--neutral-color);
+      }
+
+      &:last-child {
+        background-color: var(--tertiary-color);
+        color: var(--primary-color);
+      }
+    }
+  }
+}

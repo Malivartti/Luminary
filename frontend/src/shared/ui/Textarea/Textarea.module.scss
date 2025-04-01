@@ -1,0 +1,46 @@
+.Textarea {
+  height: 100%;
+  font-size: 16px;
+  padding: 12px 16px;
+  border: none;
+  width: 100%;
+  resize: none;
+  color: var(--primary-color);
+  background: var(--input-bg-color);
+  transition: background var(--transition-color-ms) linear,
+              color var(--transition-color-ms) linear;
+              
+
+  &::placeholder {
+    color: var(--secondary-color);
+  }
+
+  &:focus {
+    border: 1px solid var(--brand-color);
+    outline: none;
+  }
+
+  &__wrapper {
+    position: relative;
+  }
+
+  &__icon {
+    position: absolute;
+    right: 16px;
+    top: 14px;
+  }
+
+  &_icon {
+    padding-right: 50px;
+  }
+
+  &_error {
+    border: 1px solid var(--danger-color);
+  }
+
+  &__error {
+    margin-top: 8px;
+    color: var(--danger-color);
+    transition: color var(--transition-color-ms) linear;
+  }
+}

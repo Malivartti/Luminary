@@ -1,0 +1,29 @@
+.Navbar {
+  display: flex;
+
+  
+
+  &__link {
+    &_env {
+      padding-left: 35px !important;
+
+      &::before {
+        content: '';
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: var(--primary-color);
+        border-radius: 50%;
+        left: 20px;
+        top: 50%;
+        z-index: 1;
+        transform: translateY(-50%);
+      }
+    }
+
+    &:not(:first-child) {
+      padding-left: 50px;
+      position: relative;
+    }
+  }
+}

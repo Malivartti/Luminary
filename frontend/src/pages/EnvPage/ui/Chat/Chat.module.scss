@@ -1,0 +1,44 @@
+.Chat {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+
+  &__wrapper {
+    flex-grow: 1;
+    padding-top: 16px;
+    overflow: hidden auto;
+    position: relative;
+  }
+
+  &__messages {
+    position: absolute;
+    min-height: 100%;
+    width: 100%;
+    flex-direction: column;
+    justify-content: end;
+    align-items: flex-start;
+
+    & >:not(:last-child) {
+      margin-bottom: 15px;
+    }
+  }
+
+  &__form {
+    margin-top: 15px;
+    justify-self: end;
+  }
+
+  &__input {
+    border: 1px solid var(--secondary-color)
+  }
+
+  &__send-btn {
+    padding: 5px;
+  }
+
+  &__send-icon {
+    width: 20px;
+    height: 20px;
+  }
+}

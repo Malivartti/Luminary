@@ -6,11 +6,20 @@ server {
     charset     utf8;
     autoindex   off;
 
-    location = /favicon.ico { access_log off; log_not_found off; }
+    #Frontend
+    location / {
+        root /usr/share/nginx/html;
+        index index.html index.htm;
+        try_files $uri $uri/ /index.html;
+    }
 
-    location ~ ^/(admin|api)/?(.*)$ {
-        proxy_pass http://backend:8000; # gunicorn запускается в контейнере python и слушает порт 8000
+    # Backend
+    location ~ ^/(api/v1|admin|auth|register)(/|$) {
+        proxy_pass http://backend:8000;
         proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
     }
 
     location /static {

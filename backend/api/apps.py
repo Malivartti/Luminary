@@ -9,7 +9,7 @@ def add_initial_data(sender, app_config, **kwargs):
 
         if not Role.objects.exists():  # Проверка, что таблица пуста (чтобы добавить данные только один раз)
             Role.objects.bulk_create([
-                Role(name='demo', rubles_limit=0),
+                Role(name='Demo', rubles_limit=10),
             ])
         
         if not AIModel.objects.exists():

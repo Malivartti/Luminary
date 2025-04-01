@@ -1,0 +1,17 @@
+.AssistantsPage {
+  padding-top: var(--page-padding-top);
+  padding-bottom: var(--page-padding-bottom);
+
+  &__action {
+    display: flex;
+    gap: 10px;
+  }
+  
+  &__delete {
+    width: 40px;
+    height: 40px;
+    background-color: var(--danger-color);
+    color: #fff;
+    font-size: 20px;
+  }
+}

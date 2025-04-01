@@ -1,0 +1,24 @@
+.SignIn {
+  &__user {
+    display: flex;
+    align-items: center;
+  }
+
+  &__money {
+    margin-left: 15px;
+  }
+
+  &__link {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  &__icon {
+    margin-right: 10px;
+  }
+
+  &__btn {
+    width: 100%;
+  }
+}

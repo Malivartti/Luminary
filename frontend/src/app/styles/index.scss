@@ -1,0 +1,19 @@
+@use './reset' as *;
+@use './variables' as *;
+@use './fonts' as *;
+@use './theme/light' as *;
+@use './theme/dark' as *;
+
+
+html {
+  font-family: var(--font-family);
+  scroll-behavior: smooth;
+}
+
+.app {
+  background: var(--bg-color);
+  color: var(--primary-color);
+  min-height: 100vh;
+  transition: background var(--transition-color-ms) linear,
+              color var(--transition-color-ms) linear;
+}

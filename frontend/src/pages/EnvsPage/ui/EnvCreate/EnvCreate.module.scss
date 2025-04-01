@@ -1,0 +1,14 @@
+.EnvCreate {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--neutral-color);
+  padding: 24px 12px;
+  min-height: 170px;
+  transition: background var(--transition-color-ms) linear,
+              box-shadow var(--transition-color-ms) linear;
+
+  &:hover {
+    box-shadow: 0 4px 10px rgb(0 0 0 / 25%);
+  } 
+}

@@ -1,0 +1,62 @@
+.Button {
+  padding: 10px 20px;
+  background: var(--brand-color);
+  color: var(--neutral-color);
+  cursor: pointer;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-wrap: nowrap;
+  transition: background var(--transition-color-ms) linear,
+              color var(--transition-color-ms) linear;
+
+  &:hover {
+    background: var(--brand-hover-color);
+  }
+
+  &:active {
+    background: var(--brand-active-color);
+  }
+
+  &:disabled {
+    background: var(--tertiary-color);
+    cursor: default;
+  }
+  
+  &:disabled:hover {
+    background: var(--tertiary-color);
+  }
+
+  &_clear {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+  }
+
+  &_outline {
+    background: none;
+    color: var(--primary-color);
+    border: 1px solid var(--tertiary-color);
+  }
+
+  &__loader {
+    margin-right: 10px;
+    color: var(--neutral-color);
+    transition: color var(--transition-color-ms) linear;
+  }
+
+  &_loading {
+    &:hover {
+      background: var(--brand-color);
+    }
+  }
+
+  &_danger {
+    background: var(--danger-color);
+
+    &:hover {
+      background: var(--danger-hover-color);
+    }
+  }
+}

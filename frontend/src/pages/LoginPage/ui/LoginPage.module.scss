@@ -1,0 +1,37 @@
+.LoginPage {
+  display: flex;
+  justify-content: center;
+  padding-top: var(--page-padding-top);
+  padding-bottom: var(--page-padding-bottom);
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 500px;
+  }
+
+  &__input {
+    margin-bottom: 10px;
+  }
+
+  &__title {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  &__sign-up {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    align-self: center;
+    color: var(--secondary-color);
+
+    &:hover {
+      background: none;
+    }
+  }
+
+  &__btn {
+    align-self: center;
+  }
+}

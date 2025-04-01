@@ -1,0 +1,11 @@
+.EnvPage {
+  padding-top: var(--navbar-height);
+
+  &__main {
+    display: flex;
+  }
+
+  &__editor {
+    flex-grow: 1;
+  }
+}

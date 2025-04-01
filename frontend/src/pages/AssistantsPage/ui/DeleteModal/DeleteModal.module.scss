@@ -1,0 +1,11 @@
+.DeleteModal {
+  &__action {
+    display: flex;
+    margin-top: 15px;
+    justify-content: flex-end;
+  }
+
+  &__btn {
+    margin-right: 15px;
+  }
+}

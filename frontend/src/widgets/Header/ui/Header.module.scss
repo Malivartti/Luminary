@@ -1,0 +1,15 @@
+.Header {
+  position: fixed;
+  width: 100%;
+  z-index: 1;
+  background: var(--neutral-color);
+  border-bottom: 1px solid var(--tertiary-color);
+  padding: 24px 0;
+  transition: background var(--transition-color-ms) linear;
+
+  &__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
