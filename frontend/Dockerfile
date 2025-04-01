@@ -2,10 +2,10 @@ FROM node:20.19-bullseye-slim as builder
 
 WORKDIR /app
 
-COPY package.json yarn.lock ./
+COPY package.json package-lock.json ./
 
-RUN yarn install
+RUN npm install
 
 COPY . .
 
-RUN yarn build:prod
+RUN npm run build:prod

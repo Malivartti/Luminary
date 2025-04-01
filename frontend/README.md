@@ -1,12 +1,12 @@
 ## Зависимости
 node 22.14.0
 
-yarn 1.22.22
+npm 10.9.2
 
 ## Как запустить локально?
 ```bash
-yarn
-yarn dev
+npm install
+npm run dev
 ```
 
 ## Разработка
@@ -14,19 +14,19 @@ yarn dev
 
 dist - папка со сборкой
 
-Подключен [Bundle Analyzer](https://github.com/webpack-contrib/webpack-bundle-analyzer), работает только в режиме сборки для разработки (yarn build:dev)
+Подключен [Bundle Analyzer](https://github.com/webpack-contrib/webpack-bundle-analyzer), работает только в режиме сборки для разработки (npm run build:dev)
 
 package.json
 ```bash
-yarn - установка зависимостей
-yarn dev - запуск в режиме разработки
-yarn build:dev - сборка в режиме разработки
-yarn build:prod - сборка в продуктовом режиме
+npm install - установка зависимостей
+npm run dev - запуск в режиме разработки
+npm run build:dev - сборка в режиме разработки
+npm run build:prod - сборка в продуктовом режиме
 
-yarn lint:ts - валидация кода .ts,.tsx (eslint)
-yarn lint:ts:fix - исправление ошибок (eslint)
-yarn lint:scss - валидация кода .css,*.scss (stylelint)
-yarn lint:scss:fix - исправление ошибок (stylelint)
+npm run lint:ts - валидация кода .ts,.tsx (eslint)
+npm run lint:ts:fix - исправление ошибок (eslint)
+npm run lint:scss - валидация кода .css,*.scss (stylelint)
+npm run lint:scss:fix - исправление ошибок (stylelint)
 ```
 .env
 ```bash
