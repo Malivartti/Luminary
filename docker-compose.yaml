@@ -1,5 +1,4 @@
 name: luminary
-version: '3.9'
 
 services:
   backend_builder:
@@ -12,6 +11,7 @@ services:
     working_dir: /backend
     command: >
       sh -c "
+      python manage.py makemigrations --noinput &&
       python manage.py migrate --noinput &&
       python manage.py collectstatic --noinput
       "

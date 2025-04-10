@@ -10,6 +10,7 @@ export function buildPlugins({ paths, isDev, isBuild }: BuildOptions): webpack.W
   const plugins = [
     new HtmlWebpackPlagin({
       template: paths.html,
+      publicPath: paths.publicPath,
     }),
     new webpack.ProgressPlugin(),
     new MiniCssExtractPlugin({

@@ -6,7 +6,7 @@
     "dev": "webpack serve --env port=3000",
     "build:prod": "webpack --env mode=production --env build=true",
     "build:dev": "webpack --env mode=development --env build=true",
-    "predeploy": "yarn webpack --env mode=production --env publicPath=/Luminary-front/",
+    "predeploy": "yarn webpack --env mode=production --env publicPath=/luminary/",
     "deploy": "gh-pages -d dist",
     "lint:ts": "eslint \"**/*.{ts,tsx}\"",
     "lint:ts:fix": "eslint \"**/*.{ts,tsx}\" --fix",
