@@ -17,24 +17,26 @@ interface Props {
 
 const Table: FC<Props> = ({ className, columns, data }) => {
   return (
-    <table className={cn(cls.Table, {}, [className])}>
-      <thead>
-        <tr>
-          {columns.map((column) => (
-            <th key={column.key}><Text view='p-18'>{column.header}</Text></th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {data.map((row, rowIndex) => (
-          <tr key={rowIndex}>
+    <div className={cls.TableContainer}>
+      <table className={cn(cls.Table, {}, [className])}>
+        <thead>
+          <tr>
             {columns.map((column) => (
-              <td key={column.key}><Text view='p-16'>{row[column.key]}</Text></td>
+              <th key={column.key}><Text view='p-18'>{column.header}</Text></th>
             ))}
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {data.map((row, rowIndex) => (
+            <tr key={rowIndex}>
+              {columns.map((column) => (
+                <td key={column.key}><Text view='p-16'>{row[column.key]}</Text></td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 };
 

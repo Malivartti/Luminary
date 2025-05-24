@@ -1,11 +1,13 @@
 .EnvCard {
   display: flex;
   flex-direction: column;
-  background: var(--neutral-color);
   padding: 24px 12px;
   height: 100%;
   cursor: pointer;
   min-height: 170px;
+  background: var(--card-bg-color);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 10%);
   transition: background var(--transition-color-ms) linear,
               box-shadow var(--transition-color-ms) linear;
 

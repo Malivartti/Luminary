@@ -4,19 +4,18 @@ import { LOCAL_STORAGE_KEY_THEME, Theme, ThemeContext } from './ThemeContext';
 
 export const useTheme = (): {
   theme: Theme | undefined,
-  toggleTheme: () => void
+  setTheme: (theme: Theme) => void
 } => {
   const { theme, setTheme } = useContext(ThemeContext);
 
-  const toggleTheme = () => {
-    const newTheme = theme === Theme.LIGHT ? Theme.DARK : Theme.LIGHT;
+  const setNewTheme = (newTheme: Theme) => {
     localStorage.setItem(LOCAL_STORAGE_KEY_THEME, newTheme);
     if (setTheme) {
       setTheme(newTheme);
     }
   };
 
-  return { theme, toggleTheme };
+  return { theme, setTheme: setNewTheme };
 };
 
 export default useTheme;

@@ -8,6 +8,8 @@
   align-items: center;
   justify-content: center;
   text-wrap: nowrap;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 10%);
   transition: background var(--transition-color-ms) linear,
               color var(--transition-color-ms) linear;
 
@@ -29,15 +31,30 @@
   }
 
   &_clear {
-    background: none;
     border: none;
+    background: var(--card-bg-color);
     color: var(--primary-color);
+
+      &:hover {
+        background: var(--card-hover-bg-color);
+      }
+
+      &:active {
+        background: var(--card-active-bg-color);
+      }
   }
 
-  &_outline {
-    background: none;
-    color: var(--primary-color);
-    border: 1px solid var(--tertiary-color);
+  &_danger {
+    background: var(--danger-color);
+    color: var(--white-color);
+
+    &:hover {
+      background: var(--danger-hover-color);
+    }
+
+    &:active {
+      background: var(--danger-color);
+    }
   }
 
   &__loader {
@@ -49,14 +66,6 @@
   &_loading {
     &:hover {
       background: var(--brand-color);
-    }
-  }
-
-  &_danger {
-    background: var(--danger-color);
-
-    &:hover {
-      background: var(--danger-hover-color);
     }
   }
 }

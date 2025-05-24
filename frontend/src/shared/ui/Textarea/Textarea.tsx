@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import Text from '../Text';
 import cls from './Textarea.module.scss';
@@ -12,6 +12,7 @@ export type TextareaProps = Omit<
   onChange: (value: string) => void;
   afterSlot?: React.ReactNode;
   className?: string;
+  innerClassName?: string;
   error?: string;
   maxLength?: number;
 };
@@ -19,16 +20,17 @@ export type TextareaProps = Omit<
 const Textarea: React.FC<TextareaProps> = ({
   afterSlot,
   className,
+  innerClassName,
   value,
   onChange,
   error,
   maxLength,
   ...props
 }) => {
-  const [innerValue, setInnerValue ] = React.useState<string>(value);
+  const [innerValue, setInnerValue] = useState<string>(value);
 
   const onChangeValue = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    if (!maxLength || (e.target.value.length <= maxLength)) {
+    if (!maxLength || e.target.value.length <= maxLength) {
       setInnerValue(e.target.value);
       onChange(e.target.value);
     }
@@ -41,14 +43,15 @@ const Textarea: React.FC<TextareaProps> = ({
   return (
     <div className={classNames(cls.Textarea__wrapper, className)}>
       <textarea
-        className={classNames(cls.Textarea, { [cls.Textarea_icon]: afterSlot, [cls.Textarea_error]: error })}
+        className={classNames(cls.Textarea, innerClassName, { [cls.Textarea_icon]: afterSlot, [cls.Textarea_error]: error })}
         value={innerValue || value}
         onChange={onChangeValue}
         {...props}
       />
-      <span className={cls.Textarea__icon}>{afterSlot}</span>
+      {afterSlot && <span className={cls.Textarea__icon}>{afterSlot}</span>}
       {error && <Text tag='div' view='p-14' className={cls.Textarea__error}>{error}</Text>}
     </div>
-  );};
+  );
+};
 
 export default Textarea;

@@ -14,16 +14,24 @@ const EnvPage = observer(() => {
   const { id } = useParams();
 
   useEffect(() => {
-    envPageStore.setSelectedFile('');
-    envPageStore.setSheet('');
-    envPageStore.setEnvId(id);
+    const checkMobile = () => {
+      envPageStore.setIsMobile(window.innerWidth <= 970);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  useEffect(() => {
     envPageStore.defaultEnv();
+    envPageStore.setEnvId(id);
     envPageStore.getEnv();
     envPageStore.getFiles();
     aiStore.getContext(id);
     aiStore.getAIModels();
   }, [id]);
-
 
   useTrackMetaAndToast({ network: filesStore.network });
   useTrackMetaAndToast({ network: aiStore.network });
@@ -31,8 +39,11 @@ const EnvPage = observer(() => {
   return (
     <div className={cls.EnvPage}>
       <div className={cls.EnvPage__main}>
-        <Sidebar />
-        {envPageStore.selectedFile && <Editor className={cls.EnvPage__editor} />}
+        {!envPageStore.isMobile && <Sidebar />}
+        {!envPageStore.isMobile && envPageStore.selectedFile && (
+          <Editor className={cls.EnvPage__editor} />
+        )}
+        {envPageStore.isMobile && <Sidebar />}
       </div>
     </div>
   );

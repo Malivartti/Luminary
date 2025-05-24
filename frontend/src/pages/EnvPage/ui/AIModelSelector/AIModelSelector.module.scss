@@ -1,0 +1,53 @@
+.AIModelSelector {
+  &__button {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--secondary-color);
+    border-radius: 6px;
+    transition: var(--transition-color-ms);
+
+    &:hover {
+      background: var(--hover-color);
+    }
+  }
+
+  &__icon {
+    width: 16px;
+    height: 16px;
+    color: var(--text-color);
+  }
+
+  &__list {
+    max-height: 300px;
+    overflow-y: auto;
+    background: var(--card-bg-color);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgb(0 0 0 / 10%);
+  }
+
+  &__item {
+    width: 100%;
+    padding: 6px 8px;
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    border-bottom: 1px solid var(--border-color);
+
+    &:hover {
+      background: var(--card-hover-bg-color);
+    }
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &_active {
+      background: var(--card-hover-bg-color);
+    }
+  }
+}

@@ -65,9 +65,6 @@ const Files: FC<Props> = observer(({ className }) => {
       />
 
       <div className={cls.Files__btns}>
-        {/* <Button type='button' theme={ButtonTheme.CLEAR}>
-          <DownloadIon /> Скачать
-        </Button> */}
         <Button type='button' theme={ButtonTheme.CLEAR} onClick={() => setIsCreate(true)}> 
           Создать
         </Button>
@@ -75,22 +72,26 @@ const Files: FC<Props> = observer(({ className }) => {
           <LoadIcon /> Загрузить
         </Button>
       </div>
-      <div className={cls.Files__list}>
-        {envPageStore.files?.map(file => (
-          <FileItem key={file.name} file={file} />
-        ))}
-        {isCreate && (
-          <div className={cls.Files__add}>
-            <form className={cls.Files__form} onSubmit={handleCreateFile}>
-              <Input className={cls.Files__input} value={filename} onChange={setFilename} />
-              <Button type='submit'>Ок</Button>
-            </form>
-            <Text view='p-14'>Поддерживаются форматы .txt,.rtf,.md</Text>
-          </div>
-        )}
+      <div className={cls['Files__list-wrapper']}>
+        <div className={cls.Files__list}>
+          {envPageStore.files?.map(file => (
+            <FileItem key={file.name} file={file} />
+          ))}
+          {isCreate && (
+            <div className={cls.Files__add}>
+              <form className={cls.Files__form} onSubmit={handleCreateFile}>
+                <Input className={cls.Files__input} value={filename} onChange={setFilename} />
+                <Button type='submit'>Ок</Button>
+              </form>
+              <Text view='p-14'>Поддерживаются форматы .txt,.rtf,.md</Text>
+            </div>
+          )}
+        </div>
       </div>
-      <Button className={cls.Files__btn} loading={aiStore.networkCommitFiles.isLoading} onClick={handleCommitFiles}>Добавить файлы и начать диалог</Button>
-      <Button onClick={handleClearContext} loading={aiStore.networkClearContext.isLoading}>Очистить историю диалога</Button>
+      <div className={cls['Files__act-btns']}>
+        <Button className={cls.Files__btn} loading={aiStore.networkCommitFiles.isLoading} onClick={handleCommitFiles}>Добавить файлы и начать диалог</Button>
+        <Button onClick={handleClearContext} loading={aiStore.networkClearContext.isLoading}>Очистить историю диалога</Button>
+      </div>
     </div>
   );
 });

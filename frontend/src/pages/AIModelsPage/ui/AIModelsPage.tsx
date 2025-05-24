@@ -1,5 +1,9 @@
 import aiStore from '@entities/ai';
 import { AIModelAPI } from '@entities/ai/model';
+import AnthropicLogoIcon from '@shared/assets/icons/anthropic-logo.svg';
+import DeepseekLogoIcon from '@shared/assets/icons/deepseek-logo.svg';
+import GoogleGeminiLogoIcon from '@shared/assets/icons/google-gemini-logo.svg';
+import OpenAILogoIcon from '@shared/assets/icons/openai-logo.svg';
 import { formatNumberWithSpaces } from '@shared/lib/format';
 import Table from '@shared/ui/Table/Table';
 import { default as cn } from 'classnames';
@@ -13,10 +17,6 @@ const columns = [
     key: 'name',
     header: 'Название',
   },
-  // {
-  //   key: 'description',
-  //   header: 'Описание',
-  // },
   {
     key: 'context',
     header: 'Размер контекста',
@@ -32,8 +32,33 @@ const columns = [
 ];
 
 interface Props {
-    className?: string;
+  className?: string;
 }
+
+interface AIModelCardProps {
+  model: AIModelAPI;
+}
+
+const getLogo = (modelName: string) => {
+  if (modelName.toLowerCase().includes('claude')) return AnthropicLogoIcon;
+  if (modelName.toLowerCase().includes('deepseek')) return DeepseekLogoIcon;
+  if (modelName.toLowerCase().includes('gemini')) return GoogleGeminiLogoIcon;
+  if (modelName.toLowerCase().includes('gpt')) return OpenAILogoIcon;
+  return null;
+};
+
+const AIModelCard: FC<AIModelCardProps> = ({ model }) => {
+  const Logo = getLogo(model.name);
+  return (
+    <div className={cls.AIModelCard}>
+      <div className={cls.CardHeader}>
+        <Logo className={cls.Logo} />
+        {/* <h3 className={cls.ModelName}>{model.name}</h3> */}
+      </div>
+      <p className={cls.Description}>{model.description || 'Описание отсутствует'}</p>
+    </div>
+  );
+};
 
 const AIModelsPage: FC<Props> = observer(({ className }) => {
   useEffect(() => {
@@ -43,7 +68,6 @@ const AIModelsPage: FC<Props> = observer(({ className }) => {
   const AIModelsList = (models: AIModelAPI[]): { [key: string]: ReactNode; }[] => {
     return models.map(model => ({ 
       name: model.name,
-      description: model.description,
       context: formatNumberWithSpaces(model.context),
       input_price: model.input_price.toFixed(4),
       output_price: model.output_price.toFixed(4),
@@ -53,6 +77,11 @@ const AIModelsPage: FC<Props> = observer(({ className }) => {
   return (
     <div className={cn(cls.AIModelsPage, {}, [className])}>
       <Table columns={columns} data={AIModelsList(aiStore.AIModels)} />
+      <div className={cls.CardsContainer}>
+        {aiStore.AIModels.map(model => (
+          <AIModelCard key={model.name} model={model} />
+        ))}
+      </div>
     </div>
   );
 });

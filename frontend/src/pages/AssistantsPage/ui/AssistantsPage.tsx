@@ -3,14 +3,15 @@ import { AssistantApi } from '@entities/assistant/model';
 import assistantPageStore from '@pages/AssistantPage/store';
 import DeleteIcon from '@shared/assets/icons/trash.svg';
 import { AppRouteUrls } from '@shared/config/router';
-import Button from '@shared/ui/Button';
+import Button, { ButtonTheme } from '@shared/ui/Button';
 import Table from '@shared/ui/Table/Table';
 import { default as cn } from 'classnames';
 import { observer } from 'mobx-react-lite';
-import { FC, MouseEvent, ReactNode, useCallback, useEffect } from 'react';
+import { FC, MouseEvent, ReactNode, useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import assistantsPageStore from '../store';
+import AssistantList from './AssistantList';
 import cls from './AssistantsPage.module.scss';
 import DeleteModal from './DeleteModal';
 
@@ -35,9 +36,19 @@ const columns = [
 
 const AssistantsPage: FC<Props> = observer(({ className }) => {
   const navigate = useNavigate();
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 770);
 
   useEffect(() => {
     assistantStore.getAssistants();
+  }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 770);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   const onUpdate = useCallback((assistant: AssistantApi) => {
@@ -53,33 +64,38 @@ const AssistantsPage: FC<Props> = observer(({ className }) => {
   }, []);
 
   const onCreate = useCallback(() => {
-    assistantPageStore.setIsEditing(true); // Переключаем в режим редактирования
+    assistantPageStore.setIsEditing(true);
     assistantPageStore.assistantClear();
-    navigate(AppRouteUrls.assistant.create('new')); // Используем строку 'new' как ID
+    navigate(AppRouteUrls.assistant.create('new'));
   }, [navigate]);
 
-
-  const AssistantList = (assistants: AssistantApi[]): { [key: string]: ReactNode; }[] => {
+  const transformData = (assistants: AssistantApi[]): { [key: string]: ReactNode; }[] => {
     return assistants.map(assistant => ({ 
       name: assistant.name,
       description: assistant.description,
       action: (
         <div className={cls.AssistantsPage__action}>
           <Button type='button' onClick={() => onUpdate(assistant)}>Подробнее</Button>
-          <button className={cls.AssistantsPage__delete} type='button' onClick={(e) => onDelete(e, assistant)}><DeleteIcon /></button>
+          <Button theme={ButtonTheme.DANGER} type='button' onClick={(e) => onDelete(e, assistant)}><DeleteIcon /></Button>
         </div>
       ),
     }));
   };
 
+  const tableData = transformData(assistantStore.assistants);
+
   return (
     <div className={cn(cls.AssistantsPage, {}, [className])}>
       <DeleteModal />
-      <button type="button" onClick={onCreate}>
+      <Button className={cls.AssistantsPage__create} type="button" onClick={onCreate}>
         Создать
-      </button>
+      </Button>
 
-      <Table columns={columns} data={AssistantList(assistantStore.assistants)} />
+      {isMobile ? (
+        <AssistantList columns={columns} data={tableData} />
+      ) : (
+        <Table columns={columns} data={tableData} />
+      )}
     </div>
   );
 });

@@ -1,36 +1,121 @@
 .Sidebar {
-  min-height: calc(100vh - var(--navbar-height));
-  background-color: var(--neutral-color);
-  display: flex;
-
-  &__btns {
+  @media (width > 970px) {
     display: flex;
-    flex-direction: column;
-    border-right: 1px solid var(--tertiary-color);
-  }
+    flex-direction: row-reverse;
+    height: 100%;
+    
+    &__btns {
+      display: flex;
+      flex-direction: column;
+      width: 60px;
+      border-left: 1px solid var(--tertiary-color);
+    }
+    
+    &__tabs {
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      min-width: 400px;
+      border-right: 1px solid var(--tertiary-color);
+      border-left: 1px solid var(--tertiary-color);
+      
+      &_hide {
+        display: none;
+      }
+    }
+    
+    &__btn {
+      width: 60px;
+      height: 60px;
+      background-color: transparent;
+      border: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background-color 0.2s;
 
-  &__btn {
-    width: 50px;
-    height: 50px;
-    background-color: var(--skeleton-highlight-color);
 
-    &_active {
-      border-left: 1px solid var(--primary-color);
+      &:hover {
+        background-color: var(--skeleton-base-color);
+      }
+
+      span {
+        font-size: 10px;
+        margin-top: 4px;
+      }
+      
+      svg {
+        width: 20px;
+        height: 20px;
+      }
     }
 
-    &:hover {
+    &__btn_active {
       background-color: var(--skeleton-base-color);
     }
   }
 
-  &__tabs {
-    width: 400px;
-    padding: 0 16px;
-    padding-bottom: 20px;
-
-    &_hide {
-      display: none;
+  @media (width <= 970px) {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    
+    
+    &__tabs {
+      flex: 1;
+      min-height: 0;
+      height: calc(100vh - 60px);
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      
+      &_hide {
+        display: none;
+      }
+    }
+    
+    &__btns {
+      height: 45px;
+      border-top: 1px solid var(--tertiary-color);
+      display: flex;
     }
 
+    &__btn {
+      flex: 1;
+      background-color: var(--skeleton-highlight-color);
+      border: none;
+      border-top: 3px solid transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+
+      &:hover {
+        background-color: var(--skeleton-base-color);
+      }
+
+      span {
+        margin-left: 10px;
+      }
+      
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
+
+    &__btn_active {
+      background-color: var(--skeleton-base-color);
+    }
+    
+    @media (width <= 630px) {
+      &__btn span {
+        display: none !important; 
+      }
+    }
   }
 }

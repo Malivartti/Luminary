@@ -3,7 +3,7 @@ import envPageStore from '@pages/EnvPage/store';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import { Delta, Range } from 'quill';
-import { FC, MouseEvent, useEffect, useRef, useState } from 'react';
+import { FC, MouseEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import ReactQuill from 'react-quill';
 
 import cls from './Editor.module.scss';
@@ -43,7 +43,7 @@ const Editor: FC<Props> = observer(({ className }) => {
     });
 
     quillRef.current.setContents(delta);
-    envPageStore.setIsOpenFile(false);
+    // envPageStore.setIsOpenFile(false);
     
   }, [envPageStore.isOpenFile]);
 
@@ -78,9 +78,9 @@ const Editor: FC<Props> = observer(({ className }) => {
     if (!range?.length) return;
   };
 
-  const handleSave = () => {
+  const handleSave = useCallback(() => {
     envPageStore.saveFile();
-  };
+  }, []);
 
   const handlePaste = () => {
     quillRef.current.deleteText(envPageStore.selectedTextRange);
@@ -95,13 +95,39 @@ const Editor: FC<Props> = observer(({ className }) => {
   }, [envPageStore.tooltipResponse]);
 
 
-  const modules = { 
-    history: {
-      delay: 1000,
-      maxStack: 500,
-    },
+  const handleDownload = useCallback(() => {
+    const filename = envPageStore.selectedFile || 'untitled.txt';
+    const content = envPageStore.sheet || '';
+
+    const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }, [envPageStore.selectedFile, envPageStore.sheet]);
+
+
+  const modules = useMemo(() => ({
+    history: { delay: 1000, maxStack: 500 },
     toolbar: '#toolbar',
-  };
+    keyboard: {
+      bindings: {
+        save: {
+          key: 's',
+          shortKey: true,
+          handler: () => {
+            handleSave();
+            return false;
+          },
+        },
+      },
+    },
+  }), [handleSave]);
 
 
   return (
@@ -116,11 +142,11 @@ const Editor: FC<Props> = observer(({ className }) => {
         />
       </div>
       
-      <div id="toolbar">
+      <div id="toolbar" className={cls.toolbar}>
 
-        <select className="ql-size">
+        <select className="ql-size" defaultValue=''>
           <option value="small"></option>
-          <option selected></option>
+          <option value=''></option>
           <option value="large"></option>
           <option value="huge"></option>
         </select>
@@ -137,12 +163,15 @@ const Editor: FC<Props> = observer(({ className }) => {
         <button className="ql-list" value="bullet" type="button"></button>
 
         <button className={cls.Editor__custom} onClick={handleSave}>Сохранить</button>
+
         <button
           className={classNames(cls.Editor__custom, { [cls.Editor__enable]: envPageStore.enableTooltip })}
           onClick={envPageStore.toggleEnableTooltip}
         >
           AI
         </button>
+
+        <button className={cls.Editor__custom} onClick={handleDownload}>Скачать</button>
       </div>
       <ReactQuill
         ref={reactQuillRef}

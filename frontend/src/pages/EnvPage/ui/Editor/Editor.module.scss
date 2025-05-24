@@ -1,6 +1,10 @@
 .Editor {
   height: calc(100vh - 42px - var(--navbar-height));
 
+  @media (width <= 970px) {
+    height: calc(100vh - 42px - var(--navbar-height) - 77px);
+}
+
   &__custom {
     margin-left: auto;
     width: auto !important;
@@ -9,4 +13,22 @@
   &__enable {
     color: #06c;
   }
+}
+
+.toolbar :global(.ql-snow),
+.toolbar :global(.ql-picker),
+ {
+  color: var(--primary-color);
+}
+
+.toolbar :global(.ql-fill) {
+  fill: var(--primary-color);
+}
+
+.toolbar :global(.ql-stroke) {
+  stroke: var(--primary-color);
+}
+
+.toolbar :global(.ql-picker-options) {
+  background: var(--bg-color);
 }

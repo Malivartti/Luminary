@@ -3,9 +3,19 @@
     display: flex;
     margin-top: 15px;
     justify-content: flex-end;
+    gap: 16px;
   }
 
   &__btn {
-    margin-right: 15px;
+    margin-left: 15px;
+    background-color: var(--danger-color);
+
+    &:hover {
+      background-color: var(--danger-color);
+    }
+
+    &:active {
+      background-color: var(--danger-color);
+    }
   }
 }

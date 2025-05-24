@@ -19,6 +19,7 @@ class NetworkStore {
       loading: action,
       success: action,
       error: action,
+      clear: action,
     });
   }
 
@@ -44,21 +45,24 @@ class NetworkStore {
   }
 
   success(message: string = ''): void {
-    setTimeout(() => {
-      runInAction(() => {
-        this._message = message;
-        this._meta = Meta.success;
-      });
-    }, 500);
+    runInAction(() => {
+      this._message = message;
+      this._meta = Meta.success;
+    });
+    setTimeout(() => this.clear());
   }
 
   error(message: string = ''): void {
-    setTimeout(() => {
-      runInAction(() => {
-        this._message = message;
-        this._meta = Meta.error;
-      });
-    }, 500);
+    runInAction(() => {
+      this._message = message;
+      this._meta = Meta.error;
+    });
+    setTimeout(() => this.clear());
+  }
+
+  clear(): void {
+    this._meta = Meta.initial;
+    this._message = '';
   }
 }
 

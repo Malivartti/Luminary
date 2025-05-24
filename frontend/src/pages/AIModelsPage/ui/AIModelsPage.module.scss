@@ -2,3 +2,71 @@
   padding-top: var(--page-padding-top);
   padding-bottom: var(--page-padding-bottom);
 }
+
+.CardsContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-top: 32px;
+
+  @media (width <= 768px) {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 0 8px;
+  }
+}
+
+.AIModelCard {
+  background: var(--card-bg-color);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 10%);
+  padding: 24px;
+  transition: transform 0.2s ease-in-out;
+
+  &:hover {
+    transform: translateY(-4px);
+  }
+
+  @media (width <= 768px) {
+    padding: 16px;
+  }
+}
+
+.CardHeader {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.Logo {
+  width: 100px;
+  height: 40px;
+  object-fit: contain;
+  color: var(--primary-color);
+
+  @media (width <= 768px) {
+    width: 90px;
+    height: 32px;
+  }
+}
+
+.ModelName {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+
+  @media (width <= 768px) {
+    font-size: 1.25rem;
+  }
+}
+
+.Description {
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 0;
+
+  @media (width <= 768px) {
+    font-size: 0.875rem;
+  }
+}

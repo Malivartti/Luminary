@@ -50,6 +50,18 @@ const Select: React.FC<SelectProps> = ({ options, value, onChange, placeholder =
     option.label.toLowerCase().includes(filter.toLowerCase())
   );
 
+  useEffect(() => {
+    if (isOpen && dropdownRef.current) {
+      const dropdown = dropdownRef.current.querySelector(`.${cls.Select__options}`) as HTMLDivElement;
+      if (dropdown) {
+        const rect = dropdown.getBoundingClientRect();
+        const viewportHeight = window.innerHeight;
+        const spaceBelow = viewportHeight - rect.top - 15; // 15px от нижней границы
+        dropdown.style.maxHeight = `${Math.max(spaceBelow, 100)}px`; // минимум 100px
+      }
+    }
+  }, [isOpen]);
+
   return (
     <div className={cn(cls.Select, className)} ref={dropdownRef}>
       <Input
@@ -70,11 +82,11 @@ const Select: React.FC<SelectProps> = ({ options, value, onChange, placeholder =
             filteredOptions.map((option) => (
               <button
                 key={option.value}
-                className={cls.Select__option}
+                className={cn({ [cls.Select__option_selected]: value?.value === option.value }, cls.Select__option)}
                 onClick={(e) => handleOptionClick(e, option)}
                 type="button"
               >
-                <Text view="p-16" color={value?.value === option.value ? 'accent' : 'primary'}>
+                <Text view="p-16"color={value?.value === option.value ? 'accent' : 'primary'}>
                   {option.label}
                 </Text>
               </button>

@@ -1,0 +1,51 @@
+.PromptInput {
+  background-color: var(--card-bg-color);
+  border: 1px solid var(--secondary-color);
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgb(0 0 0 / 8%);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-height: 300px;
+}
+
+.PromptInput__textarea {
+  resize: none;
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: 14px;
+  line-height: 1.4;
+  padding: 8px 0;
+  background: transparent;
+  color: inherit;
+  font-family: inherit;
+  min-height: 30px;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.PromptInput__footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-top: 8px;
+  gap: 8px;
+}
+
+.PromptInput__sendBtn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--secondary-color);
+  border-radius: 6px;
+  transition: var(--transition-color-ms);
+}
+
+.PromptInput__sendIcon {
+  width: 20px;
+  height: 20px;
+}

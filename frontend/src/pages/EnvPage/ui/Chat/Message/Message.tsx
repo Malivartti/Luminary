@@ -2,6 +2,7 @@ import CheckIcon from '@shared/assets/icons/check2.svg';
 import CopyIcon from '@shared/assets/icons/clipboard.svg';
 import { formatDDMMYYYYHHMM } from '@shared/lib/date';
 import Text from '@shared/ui/Text';
+import { default as cn } from 'classnames';
 import { FC, useCallback, useState } from 'react';
 
 import cls from './Message.module.scss';
@@ -14,7 +15,7 @@ type Props = {
   model?: string
 }
 
-const Message: FC<Props> = ({ text, sendedAt, cost, model }) => {
+const Message: FC<Props> = ({ text, role, sendedAt, cost, model }) => {
   const [isCopyed, setIsCopyed] = useState(false);
 
   const handleClick = useCallback(() => {
@@ -24,7 +25,7 @@ const Message: FC<Props> = ({ text, sendedAt, cost, model }) => {
   }, [text]);
 
   return (
-    <div className={cls.Message} >
+    <div className={cn(cls.Message, cls[`Message__${role}`])} >
       <Text className={cls.Message__text} view='p-16'>{text}</Text>
       <div className={cls.Message__footer}>
         <button

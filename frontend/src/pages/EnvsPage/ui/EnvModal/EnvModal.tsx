@@ -3,7 +3,7 @@ import assistantStore from '@entities/assistant';
 import envsStore from '@entities/envs';
 import envsPageStore from '@pages/EnvsPage/store';
 import CloseIcon from '@shared/assets/icons/close.svg';
-import Button from '@shared/ui/Button';
+import Button, { ButtonTheme } from '@shared/ui/Button';
 import Input from '@shared/ui/Input';
 import { Select } from '@shared/ui/Select/Select';
 import Text from '@shared/ui/Text';
@@ -112,8 +112,8 @@ const EnvModal = observer(() => {
     case 'delete':
       return <Button
         className={cls.EnvModal__btn}
+        theme={ButtonTheme.DANGER}
         type='button'
-        design='danger'
         loading={envsStore.network.isLoading}
         onClick={handleDelete}
       >

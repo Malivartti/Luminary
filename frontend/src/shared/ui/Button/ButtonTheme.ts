@@ -1,4 +1,4 @@
 export enum ButtonTheme {
   CLEAR = 'clear',
-  OUTLINE = 'outline',
+  DANGER = 'danger',
 }

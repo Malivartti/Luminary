@@ -71,7 +71,6 @@ class EnvsStore {
       });
       runInAction(() => {
         this._envs = normalizeEnvs(res.data);
-        console.log(res.data)
         this.network.success();
       });
     } catch(e) {
@@ -107,12 +106,15 @@ class EnvsStore {
     const url = endpoints.update(id);
 
     try {
-      await axios.put(url, data, {
+      const res: AxiosResponse<EnvApi> = await axios.put(url, data, {
         headers: {
           Authorization: `Token ${userStore.token}`,
         },
       });
-      this.network.success('Окружение успешно изменено');
+      runInAction(() => {
+        this._env = normalizeEnv(res.data);
+        this.network.success('Окружение успешно изменено');
+      });
     } catch(e) {
       runInAction(() => {
         this.network.error('Не удалось обновить окружение');

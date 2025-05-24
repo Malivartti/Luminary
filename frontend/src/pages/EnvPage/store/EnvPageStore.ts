@@ -6,12 +6,15 @@ import { NFile } from '@entities/network/model';
 import { action, computed, makeObservable, observable, runInAction } from 'mobx';
 import { Range } from 'react-quill';
 
-type PrivateFields = '_envId' | '_envTitle' | '_sheet' | '_prompt' | '_selectedFile' | '_selectedTextRange' | '_selectedText'
-    | '_files' | '_isShowFiles' | '_isShowChat' | '_isShowTooltip' | '_isOpenFile' | '_enableTooltip' | '_tooltipResponse';
+type PrivateFields = '_envId' | '_envTitle' | '_sheet' | '_prompt' | '_envAIModel'
+                    | '_selectedFile' | '_selectedTextRange' | '_selectedText' | '_isShowEditor'
+                    | '_files' | '_isShowFiles' | '_isShowChat' | '_isShowTooltip' | '_isOpenFile'
+                    | '_enableTooltip' | '_tooltipResponse' | '_isMobile';
 
 class EnvPageStore {
   private _envId: string | null = null;
   private _envTitle: string = '';
+  private _envAIModel: number | null = null;
   private _sheet: string = '';
   private _prompt: string = '';
   private _selectedFile: string = '';
@@ -19,16 +22,19 @@ class EnvPageStore {
   private _isShowFiles: boolean = true;
   private _isShowChat: boolean = false;
   private _isShowTooltip: boolean = false;
+  private _isShowEditor: boolean = false;
   private _isOpenFile: boolean = false;
   private _selectedText: string = '';
   private _selectedTextRange: Range = null;
   private _enableTooltip: boolean = true;
   private _tooltipResponse: string = '';
+  private _isMobile: boolean = false;
 
   constructor() {
     makeObservable<EnvPageStore, PrivateFields>(this, {
       _envId: observable,
       _envTitle: observable,
+      _envAIModel: observable,
       _sheet: observable,
       _enableTooltip: observable,
       _tooltipResponse: observable,
@@ -40,9 +46,13 @@ class EnvPageStore {
       _isShowFiles: observable,
       _isShowChat: observable,
       _isShowTooltip: observable,
+      _isShowEditor: observable,
       _isOpenFile: observable,
+      _isMobile: observable,
+
       isOpenFile: computed,
       envId: computed,
+      envAIModel: computed,
       selectedTextRange: computed,
       tooltipResponse: computed,
       envTitle: computed,
@@ -53,8 +63,11 @@ class EnvPageStore {
       files: computed,
       isShowFiles: computed,
       isShowChat: computed,
+      isShowEditor: computed,
       isActiveTab: computed,
       isShowTooltip: computed,
+      isMobile: computed,
+
       setIsOpenFile: action,
       setSelectedTextRange: action,
       setTooltipResponse: action,
@@ -74,6 +87,7 @@ class EnvPageStore {
       setIsShowFiles: action,
       setIsShowChat: action,
       setIsShowTooltip: action,
+      setIsShowEditor: action,
       sendPrompt: action,
       sendPromptInChat: action,
       loadFile: action,
@@ -83,7 +97,14 @@ class EnvPageStore {
       generate: action,
       getEnv: action,
       sendTooltipPromt: action,
+      setIsMobile: action,
+      ensureMobileTabOpen: action,
+      editEnvAIModel: action,
     });
+  }
+
+  get isMobile(): boolean {
+    return this._isMobile;
   }
 
   get isOpenFile(): boolean {
@@ -96,6 +117,10 @@ class EnvPageStore {
 
   get envId(): string {
     return this._envId;
+  }
+
+  get envAIModel(): number | null {
+    return this._envAIModel;
   }
 
   get selectedText(): string {
@@ -142,8 +167,12 @@ class EnvPageStore {
     return this._isShowTooltip && this.enableTooltip;
   }
 
+  get isShowEditor(): boolean {
+    return this._isShowEditor;
+  }
+
   get isActiveTab(): boolean {
-    return this._isShowFiles || this._isShowChat;
+    return this._isShowFiles || this._isShowChat || this._isShowEditor;
   }
 
   setSelectedText(text: string): void {
@@ -182,8 +211,13 @@ class EnvPageStore {
   }
 
   defaultEnv(): void {
+    this._selectedFile = '';
+    this._isOpenFile = false;
+    this._sheet = '';
+    this._tooltipResponse = '';
     this._isShowTooltip = false;
     this._isShowChat = false;
+    this._isShowEditor = false;
     this._isShowFiles = true;
   }
 
@@ -199,10 +233,6 @@ class EnvPageStore {
     this._isShowTooltip = isShowTooltip;
   }
 
-  setSelectedFile(selectedFile: string): void {
-    this._selectedFile = selectedFile;
-  }
-
   addLocalFile(file: NFile): void {
     if (this._files.find(f => f.name === file.name)) return;
     this._files = [...this._files, file];
@@ -215,9 +245,18 @@ class EnvPageStore {
   closeTabs() {
     this._isShowChat = false;
     this._isShowFiles = false;
+    this._isShowEditor = false;
   }
 
   setIsShowFiles(isShowFiles: boolean): void {
+    if (this._isMobile) {
+      if (isShowFiles) {
+        this.closeTabs();
+        this._isShowFiles = true;
+      }
+      return;
+    }
+    
     if (isShowFiles === this._isShowFiles) {
       this._isShowFiles = false;
       return;
@@ -227,12 +266,62 @@ class EnvPageStore {
   }
 
   setIsShowChat(isShowChat: boolean): void {
+    if (this._isMobile) {
+      if (isShowChat) {
+        this.closeTabs();
+        this._isShowChat = true;
+      }
+      return;
+    }
+    
     if (isShowChat === this._isShowChat) {
       this._isShowChat = false;
       return;
     }
     this.closeTabs();
     this._isShowChat = isShowChat;
+  }
+
+  setIsShowEditor(isShowEditor: boolean): void {
+    if (this._isMobile) {
+      if (isShowEditor && this._selectedFile) {
+        this.closeTabs();
+        this._isShowEditor = true;
+      } else if (!isShowEditor) {
+        this._isShowEditor = false;
+      }
+      return;
+    }
+  
+    if (isShowEditor === this._isShowEditor) {
+      this._isShowEditor = false;
+      return;
+    }
+    this._isShowEditor = isShowEditor;
+  }
+
+  setSelectedFile(selectedFile: string): void {
+    this._selectedFile = selectedFile;
+    
+    if (this._isMobile && selectedFile) {
+      this.setIsShowEditor(true);
+    }
+  }
+
+
+  setIsMobile(isMobile: boolean): void {
+    this._isMobile = isMobile;
+    if (isMobile) {
+      this.ensureMobileTabOpen();
+    }
+  }
+
+  ensureMobileTabOpen(): void {
+    if (!this._isMobile) return;
+    
+    if (!this._isShowFiles && !this._isShowChat && !this._isShowEditor) {
+      this._isShowFiles = true;
+    }
   }
 
   async createFile(filename: string): Promise<void> {
@@ -286,7 +375,7 @@ class EnvPageStore {
   async sendPromptInChat(): Promise<void> {
     await this.sendPrompt();
     if (aiStore.network.isError) return;
-    this._prompt = '';
+    this.setPrompt('');
     await aiStore.getContext(this._envId);
   }
 
@@ -365,6 +454,19 @@ class EnvPageStore {
     await envsStore.getEnv(this._envId);
     if (envsStore.network.isError) return;
     this._envTitle = envsStore.env.title;
+    this._envAIModel = envsStore.env.ai_model;
+  }
+
+  async editEnvAIModel(aiModel: number): Promise<void> {
+    await envsStore.updateEnv(this._envId, {
+      name: envsStore.env.title,
+      assistant: envsStore.env.assistant,
+      ai_model: aiModel,
+    });
+    if (envsStore.network.isError) return;
+    runInAction(() => {
+      this._envAIModel = aiModel;
+    });
   }
 }
 

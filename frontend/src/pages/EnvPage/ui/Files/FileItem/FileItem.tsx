@@ -36,7 +36,7 @@ const FileItem: FC<Props> = observer(({ file }) => {
         {file.network.isLoading && <Loader className={cls['FileItem__status-icon']} size='s' />}
         {(!file.network.isLoading && !file.network.isError) && <FileIcon className={cls['FileItem__status-icon']} />}
         {file.network.isError && <ErrorIcon className={cn(cls['FileItem__status-icon'], cls['FileItem__status-icon_error'])} />}
-        <Text view='p-16' className={cls.FileItem__name}>{file.name}</Text>
+        <Text view='p-14' className={cls.FileItem__name}>{file.name}</Text>
       </div>
       <div className={cls.FileItem__actions}>
         <button className={cls.FileItem__action} type='button' onClick={handleDelete}>

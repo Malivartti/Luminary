@@ -7,12 +7,13 @@
     top: 60px;
     width: 100%;
     z-index: 1;
-    background-color: var(--input-bg-color);
+    background-color: var(--card-bg-color);
     display: flex;
     flex-direction: column;
-    box-shadow: 0 4px 10px rgb(0 0 0 / 25%);
-    max-height: 430px;
-    overflow-y: scroll;
+    max-height: none;
+    overflow-y: auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgb(0 0 0 / 10%);
     transition: background var(--transition-color-ms) linear;
   }
 
@@ -20,7 +21,17 @@
     padding: 14px 12px;
     text-align: start;
     background: none;
-    border: none;
+    border: 1px solid transparent;
     cursor: pointer;
+    border-radius: 12px;
+    transition: border var(--transition-color-ms) linear;
+
+    &:hover {
+      border: 1px solid var(--brand-color);
+    }
+
+    &_selected {
+      border: 1px solid var(--brand-color);
+    }
   }
 }

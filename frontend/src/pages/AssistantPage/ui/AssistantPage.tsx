@@ -2,7 +2,9 @@ import assistantStore from '@entities/assistant';
 import { AppRouteUrls } from '@shared/config/router';
 import { splitTextByEmptyLines } from '@shared/lib/string';
 import Button, { ButtonTheme } from '@shared/ui/Button';
+import Input from '@shared/ui/Input';
 import Text from '@shared/ui/Text';
+import Textarea from '@shared/ui/Textarea';
 import { default as cn } from 'classnames';
 import { observer } from 'mobx-react-lite';
 import { FC, useEffect } from 'react';
@@ -47,36 +49,41 @@ const AssistantPage: FC<Props> = observer(({ className }) => {
   return (
     <div className={cn(cls.AssistantPage, {}, [className])}>
       {assistantPageStore.isEditing ? (
-        // Режим редактирования
         <div>
-          <Text view='p-16'>Имя:</Text>
-          <input
-            type="text"
-            value={assistantPageStore.name}
-            onChange={(e) => {
-              assistantPageStore.setName(e.target.value);
-            }}
-          />
+          <div className={cls.AssistantPage__block}>
+            <Text view='p-16'>Имя:</Text>
+            <Input
+              className={cls['AssistantPage__block-input']}
+              value={assistantPageStore.name}
+              onChange={(value) => assistantPageStore.setName(value)}
+              placeholder='Введите имя ассистента'
+            />
+          </div>
 
-          <Text view='p-16'>Описание:</Text>
-          <textarea
-            value={assistantPageStore.description}
-            onChange={(e) => {
-              assistantPageStore.setDescription(e.target.value);
-            }}
-          />
+          <div className={cls.AssistantPage__block}>
+            <Text view='p-16'>Описание:</Text>
+            <Textarea
+              className={cls['AssistantPage__block-input']}
+              value={assistantPageStore.description}
+              onChange={(value) => assistantPageStore.setDescription(value)}
+              placeholder='Введите описание ассистента'
+            />
+          </div>
 
-          <Text view='p-16'>Контекст:</Text>
-          <textarea
-            className={cls['AssistantPage__edit-context']}
-            value={assistantPageStore.context}
-            onChange={(e) => {
-              assistantPageStore.setContext(e.target.value);
-            }}
-          />
+          <div className={cls.AssistantPage__block}>
+            <Text view='p-16'>Контекст:</Text>
+            <Textarea
+              className={cls['AssistantPage__block-input']}
+              innerClassName={cls['AssistantPage__block-context']}
+              value={assistantPageStore.context}
+              onChange={(value) => assistantPageStore.setContext(value)}
+              placeholder='Введите контекст ассистента'
+            />
+          </div>
+
           <div className={cls.AssistantPage__action}>
             <Button onClick={handleSaveClick}>Сохранить</Button>
-            {id !== 'new' && <Button theme={ButtonTheme.OUTLINE} onClick={handleCancelClick}>Отмена</Button>}
+            {id !== 'new' && <Button theme={ButtonTheme.CLEAR} onClick={handleCancelClick}>Отмена</Button>}
           </div>
         </div>
       ) : (

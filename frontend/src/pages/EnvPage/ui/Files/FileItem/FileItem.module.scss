@@ -1,9 +1,12 @@
 .FileItem {
-  padding: 10px 15px;
+  padding: 5px 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  background-color: var(--card-bg-color);
+  border: 1px solid var(--secondary-color);
+  border-radius: 12px;
 
   &:hover {
     background-color: var(--skeleton-highlight-color);
@@ -17,11 +20,14 @@
     color: var(--secondary-color);
     display: flex;
     flex-wrap: nowrap;
+    flex-shrink: 0; /* Не позволяем кнопкам сжиматься */
   }
 
   &__head {
     display: flex;
     align-items: center;
+    min-width: 0; /* Позволяем элементу сжиматься */
+    flex: 1; /* Занимаем доступное пространство */
   }
 
   &__action {
@@ -44,5 +50,12 @@
     &_error {
       color: var(--danger-color);
     }
+  }
+
+  &__name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0; /* Позволяем тексту сжиматься */
   }
 }

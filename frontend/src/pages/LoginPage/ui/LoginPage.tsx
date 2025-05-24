@@ -19,7 +19,8 @@ const LoginPage = observer(() => {
     e.preventDefault();
     await loginPageStore.login();
 
-    if (userStore.network.isError) return;
+    if (!userStore.network.isSuccess) return;
+
     navigate(AppRouteUrls.root);
   }, [loginPageStore, navigate]);
 

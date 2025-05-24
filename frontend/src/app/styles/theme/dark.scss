@@ -1,16 +1,20 @@
-.app.dark {
-  --brand-color: #86aaa7;
-  --brand-hover-color: #518581;
-  --brand-active-color: #487773;
+.dark {
+  --brand-color: #7db8b3;
+  --brand-hover-color: #9cc9c5;
+  --brand-active-color: #6ba7a2;
   --bg-color: #181818;
   --inverted-bg-color: #333;
   --primary-color: #fff;
   --secondary-color: #AFADB5;
   --tertiary-color: #D9D9D9;
   --neutral-color: #282828;
-  --input-bg-color: #333;
   --skeleton-base-color: #434343;
   --skeleton-highlight-color: #363636;
   --danger-color: red;
   --danger-hover-color: #C60000;
+  --danger-active-color: #F33;
+  --card-bg-color: #242424;
+  --card-hover-bg-color: #313131;
+  --card-active-bg-color: #4B4B4B;
+  --white-color: #fff;
 }

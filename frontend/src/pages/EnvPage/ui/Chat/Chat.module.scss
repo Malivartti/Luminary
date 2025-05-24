@@ -2,7 +2,8 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-
+  width: 100%;
+  padding: 16px;
 
   &__wrapper {
     flex-grow: 1;
@@ -15,11 +16,12 @@
     position: absolute;
     min-height: 100%;
     width: 100%;
+    display: flex;
     flex-direction: column;
-    justify-content: end;
+    justify-content: flex-end;
     align-items: flex-start;
 
-    & >:not(:last-child) {
+    & > :not(:last-child) {
       margin-bottom: 15px;
     }
   }
@@ -29,12 +31,44 @@
     justify-self: end;
   }
 
-  &__input {
-    border: 1px solid var(--secondary-color)
+  &__inputContainer {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+    padding-right: 140px;
+  }
+
+  &__textarea {
+    resize: none;
+    width: 100%;
+    min-height: 40px;
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid var(--secondary-color);
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 14px;
+    line-height: 1.4;
+    box-sizing: border-box;
+  }
+
+  &__inputAfter {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    background: var(--background-color);
   }
 
   &__send-btn {
     padding: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
   }
 
   &__send-icon {

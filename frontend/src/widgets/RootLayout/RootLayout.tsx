@@ -1,6 +1,5 @@
-import { useTheme } from '@app/providers/ThemeProvider';
+import { useActualTheme } from '@app/providers/ThemeProvider';
 import userStore from '@entities/user';
-import classNames from 'classnames';
 import { FC, ReactNode, useLayoutEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
 
@@ -12,7 +11,7 @@ type RootLayoutProps = {
 }
 
 const RootLayout: FC<RootLayoutProps> = ({ children }) => {
-  const { theme } = useTheme();
+  const actualTheme = useActualTheme();
 
   useLayoutEffect(() => {
     if (userStore.isLogin) {
@@ -20,14 +19,18 @@ const RootLayout: FC<RootLayoutProps> = ({ children }) => {
     }
   }, []);
 
+  useLayoutEffect(() => {
+    document.body.className = `app ${actualTheme}`;
+  }, [actualTheme]);
+
   return (
-    <div className={classNames('app', theme)}>
+    <>
       <Header />
       <ContainerLayout>
         <ToastContainer />
         {children}
       </ContainerLayout>
-    </div>
+    </>
   );
 };
 

@@ -1,12 +1,18 @@
 .Message {
   padding: 10px;
-  background-color: var(--skeleton-highlight-color);
   display: flex;
   flex-direction: column;
-  border-radius: 4px;
+  background-color: var(--card-bg-color);
+  border: 1px solid var(--secondary-color);
+  border-radius: 12px;
 
   &__text {
     white-space: pre-line;
+  }
+
+  &__user {
+    align-self: flex-end;
+    background: var(--skeleton-base-color);
   }
 
   &__footer {

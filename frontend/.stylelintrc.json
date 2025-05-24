@@ -3,6 +3,12 @@
   "files": ["**/*.scss"],
   "rules": {
     "selector-class-pattern": null,
-    "block-no-empty": true
+    "block-no-empty": true,
+    "selector-pseudo-class-no-unknown": [
+      true,
+      {
+        "ignorePseudoClasses": ["global", "local"]
+      }
+    ]
   }
 }

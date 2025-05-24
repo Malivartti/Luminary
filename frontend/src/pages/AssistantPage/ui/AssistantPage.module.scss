@@ -15,36 +15,21 @@
   &__content {
     margin-bottom: 20px;
     padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    background: var(--card-bg-color);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgb(0 0 0 / 10%);
   }
 
+  &__block {
+    margin-bottom: 20px;
 
-  &__edit-context {
-    min-height: 400px;
-  }
+    &-input {
+      margin-top: 5px;
+    }
 
-  p {
-    margin-bottom: 10px;
-    line-height: 1.6;
-  }
-
-  input[type="text"],
-  textarea {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box; /* Чтобы padding не увеличивал ширину элемента */
-    font-size: 16px;
-    background: var(--input-bg-color);
-    transition: background var(--transition-color-ms) linear;
-  }
-
-  textarea {
-    height: 100px;
-    resize: vertical; /* Разрешить изменение высоты textarea */
+    &-context {
+      min-height: 400px;
+    }
   }
 
   &__action {

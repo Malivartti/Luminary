@@ -3,32 +3,53 @@
 
   &__list {
     position: absolute;
+    z-index: 10;
+    width: 100px;
+    background: var(--card-bg-color);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgb(0 0 0 / 10%);
+    transition: background var(--transition-color-ms) linear,
+    opacity var(--transition-color-ms) linear;
+
+  &_hide {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  &_position_bottom {
     top: 30px;
     left: 50%;
-    z-index: 10;
-    padding: 5px 0;
     transform: translateX(-50%);
-    background-color: var(--bg-color);
-    width: 100px;
-    box-shadow: 0 4px 10px rgb(0 0 0 / 25%);
-    transition: background var(--transition-color-ms) linear,
-                opacity var(--transition-color-ms) linear;
+  }
 
-    &_hide {
-      opacity: 0;
-      pointer-events: none;
+  &_position_top {
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  &_position_right {
+  top: 50%;
+  left: calc(100% + 10px);
+  transform: translateY(-50%);
+  }
+
+  &_position_left {
+    top: 50%;
+    right: calc(100% + 10px);
+    transform: translateY(-50%);
+  }
+
+  & > * {
+    display: block;
+    text-align: center;
+    padding: 5px 0;
+    cursor: pointer;
+    transition: background var(--transition-color-ms) linear;
+
+    &:hover {
+      background-color: var(--neutral-color);
     }
-
-    & > * {
-      display: block;
-      text-align: center;
-      padding: 5px 0;
-      cursor: pointer;
-      transition: background var(--transition-color-ms) linear;
-
-      &:hover {
-        background-color: var(--neutral-color);
-      }
     }
   }
 }

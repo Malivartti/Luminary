@@ -1,29 +1,64 @@
 .Navbar {
   display: flex;
-
+  flex: 1;
+  min-width: 0;
   
-
   &__link {
-    &_env {
-      padding-left: 35px !important;
-
-      &::before {
-        content: '';
-        position: absolute;
-        width: 4px;
-        height: 4px;
-        background: var(--primary-color);
-        border-radius: 50%;
-        left: 20px;
-        top: 50%;
-        z-index: 1;
-        transform: translateY(-50%);
-      }
+    display: flex;
+    align-items: center;
+    padding: 8px 16px;
+    margin: 0 4px;
+    border-radius: 8px;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    flex-shrink: 0;
+    user-select: none;
+    border: 1px solid transparent;
+    
+    &:hover {
+      border: 1px solid var(--brand-color);
     }
+  }
+}
 
-    &:not(:first-child) {
-      padding-left: 50px;
-      position: relative;
+.sliderContainer {
+  width: 100%;
+  overflow: auto hidden;
+  display: flex;
+  
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.navSlider {
+  display: flex;
+  width: max-content;
+  
+  .sliderContainer:not(.scrollable) & {
+    margin: 0 auto;
+  }
+}
+
+.NavbarVertical {
+  display: flex;
+  flex-direction: column;
+  
+  &__link {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    margin: 4px 0;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    
+    &:hover {
+      background-color: rgb(58 58 58 / 20%);
     }
   }
 }

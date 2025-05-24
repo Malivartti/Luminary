@@ -3,9 +3,18 @@
 
   &__main {
     display: flex;
+    flex-direction: row;
+    height: calc(100vh - var(--navbar-height));
   }
 
   &__editor {
     flex-grow: 1;
+  }
+
+  @media (width <= 970px) {
+    &__main {
+      flex-direction: column;
+      height: calc(100vh - var(--navbar-height));
+    }
   }
 }

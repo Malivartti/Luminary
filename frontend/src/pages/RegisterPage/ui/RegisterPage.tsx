@@ -19,8 +19,8 @@ const RegisterPage = observer(() => {
     e.preventDefault();
     await registerPageStore.register();
 
-    if (userStore.network.isError) return;
-    navigate(AppRouteUrls.root);
+    if (!userStore.network.isSuccess) return;
+    navigate(AppRouteUrls.envs.create());
   }, [registerPageStore, navigate]);
 
   const toLogin = useCallback(() => {

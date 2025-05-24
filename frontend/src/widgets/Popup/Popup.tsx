@@ -3,48 +3,70 @@ import { FC, ReactNode, useCallback, useEffect, useLayoutEffect, useRef, useStat
 
 import cls from './Popup.module.scss';
 
+type PopupPosition = 'top' | 'bottom' | 'left' | 'right';
+
 type PopupProps = {
-  className?: string;
-  button: ReactNode;
-  children: ReactNode;
-  width?: number;
+className?: string;
+button: ReactNode;
+children: ReactNode;
+width?: number;
+position?: PopupPosition;
 }
 
-const Popup: FC<PopupProps> = ({ className, button, children, width }) => {
+const Popup: FC<PopupProps> = ({
+  className,
+  button,
+  children,
+  width,
+  position = 'bottom',
+}) => {
   const [isShow, setIsShow] = useState<boolean>(false);
   const popupRef = useRef<HTMLButtonElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
-    const handleResize = () => {
-      requestAnimationFrame(() => {
-        if (listRef.current) {
-          const { x, width } = listRef.current.getBoundingClientRect();
-          const viewportWidth = window.innerWidth;
-  
-          let newLeft = null;
-  
-          if (x + width > viewportWidth) {
-            newLeft = '0px';
-          } else if (x < 15) {
-            newLeft = '15px';
-          }
-  
-          if (newLeft !== null) {
-            listRef.current.style.left = newLeft;
-            listRef.current.style.right = newLeft === '0px' ? '15px' : '';
-          }
-        }
-      });
+    const adjustPosition = () => {
+      if (!listRef.current) return;
+
+      const popupEl = listRef.current;
+      const rect = popupEl.getBoundingClientRect();
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+      const offset = 15;
+
+      let top = popupEl.offsetTop;
+      let left = popupEl.offsetLeft;
+
+      const parent = popupEl.offsetParent as HTMLElement;
+      if (!parent) return;
+
+      const parentRect = parent.getBoundingClientRect();
+
+      if (rect.right > viewportWidth - offset) {
+        left -= rect.right - viewportWidth + offset;
+      }
+      if (rect.left < offset) {
+        left += offset - rect.left;
+      }
+      if (rect.bottom > viewportHeight - offset) {
+        top -= rect.bottom - viewportHeight + offset;
+      }
+      if (rect.top < offset) {
+        top += offset - rect.top;
+      }
+
+      popupEl.style.position = 'absolute';
+      popupEl.style.left = `${left}px`;
+      popupEl.style.top = `${top}px`;
     };
-  
-    handleResize();
-    window.addEventListener('resize', handleResize);
-  
+
+    requestAnimationFrame(adjustPosition);
+    window.addEventListener('resize', adjustPosition);
+
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('resize', adjustPosition);
     };
-  }, []);
+  }, [isShow]);
 
   const toggle = useCallback(() => {
     setIsShow(prev => !prev);
@@ -73,9 +95,10 @@ const Popup: FC<PopupProps> = ({ className, button, children, width }) => {
       >
         {button}
       </button>
-      <div 
+      <div
         className={classNames(
           cls.Popup__list,
+          cls[`Popup__list_position_${position}`],
           { [cls.Popup__list_hide]: !isShow }
         )}
         ref={listRef}

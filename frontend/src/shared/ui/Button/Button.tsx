@@ -10,7 +10,6 @@ export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   loading?: boolean;
   children: React.ReactNode;
   theme?: ButtonTheme;
-  design?: 'danger'
 };
 
 const Button: React.FC<ButtonProps> = ({
@@ -18,11 +17,10 @@ const Button: React.FC<ButtonProps> = ({
   className,
   children,
   theme,
-  design,
   ...props
 }) => (
   <button 
-    className={classNames(cls.Button, className, { [cls.Button_loading]: loading }, cls[`Button_${theme}`], cls[`Button_${design}`])}
+    className={classNames(cls.Button, className, { [cls.Button_loading]: loading }, cls[`Button_${theme}`])}
     disabled={loading} 
     {...props}
   >

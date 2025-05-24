@@ -40,5 +40,5 @@ export const normalizeEnv = (raw: EnvApi): EnvModel => ({
 });
 
 export const normalizeEnvs = (raw: EnvApi[]): EnvModel[] => (
-  raw.map(normalizeEnv)
+  raw.map(normalizeEnv).sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime())
 );
