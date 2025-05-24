@@ -25,16 +25,16 @@ services:
     env_file:
       - .env
 
-  # frontend_builder:
-  #   build:
-  #     context: ./frontend
-  #   image: luminary_frontend_builder
-  #   container_name: luminary_frontend_builder
-  #   restart: no
-  #   working_dir: /app
-  #   command: yarn build:prod
-  #   volumes:
-  #     - frontend_build:/app/dist
+  frontend_builder:
+    build:
+      context: ./frontend
+    image: luminary_frontend_builder
+    container_name: luminary_frontend_builder
+    restart: no
+    working_dir: /app
+    command: yarn build:prod
+    volumes:
+      - frontend_build:/app/dist
 
   backend:
     build:
@@ -106,12 +106,12 @@ services:
       - 443:443
     volumes:
       - backend_staticfiles:/static
-      # - frontend_build:/usr/share/nginx/html
+      - frontend_build:/usr/share/nginx/html
     depends_on:
       backend:
         condition: service_started
-      # frontend_builder:
-      #   condition: service_started
+      frontend_builder:
+        condition: service_started
 
 volumes:
   environments_data:
