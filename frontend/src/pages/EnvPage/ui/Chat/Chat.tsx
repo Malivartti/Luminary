@@ -37,14 +37,13 @@ const Chat = observer(() => {
           ))}
         </div>
       </div>
-
-      <form className={cls.Chat__form} onSubmit={handleSubmit}>
+      <div className={cls.Chat__form}>
         <PromptInput 
           value={envPageStore.prompt}
           onChange={envPageStore.setPrompt}
           onSubmit={handleSubmit}
         />
-      </form>
+      </div>
     </div>
   );
 });

@@ -164,9 +164,7 @@ const Tooltip: FC<Props> = observer(({ className, isShow, x, y, handlePaste }) =
     setIsPinned((prev) => !prev);
   };
 
-  const handleGen = (e?: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
+  const handleGen = () => {
     if (envPageStore.selectedText) {
       envPageStore.sendTooltipPromt(`${formInput} для текста: ${envPageStore.selectedText}`);
     } else {
@@ -233,9 +231,9 @@ const Tooltip: FC<Props> = observer(({ className, isShow, x, y, handlePaste }) =
           <option>Логично</option>
         </select>
       </div>
-      <form className={cls.Tooltip__form} onSubmit={handleGen}>
+      <div className={cls.Tooltip__form}>
         <PromptInput onSubmit={handleGen} value={formInput} onChange={(val) => setFormInput(val)}/>
-      </form>
+      </div>
       {envPageStore.tooltipResponse && (
         <div>
           <div className={cls.Tooltip__response}>{envPageStore.tooltipResponse}</div>

@@ -1,4 +1,3 @@
-// PromptInput.tsx
 import aiStore from '@entities/ai';
 import SendIcon from '@shared/assets/icons/send.svg';
 import Loader from '@shared/ui/Loader';
@@ -25,7 +24,13 @@ const PromptInput = observer(({ value, onChange, onSubmit }: PromptInputProps) =
   }, [value]);
 
   return (
-    <div className={cls.PromptInput}>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        onSubmit();
+      }}
+      className={cls.PromptInput}
+    >
       <textarea
         ref={textareaRef}
         className={cls.PromptInput__textarea}
@@ -44,8 +49,7 @@ const PromptInput = observer(({ value, onChange, onSubmit }: PromptInputProps) =
         <AIModelSelector />
         <button 
           className={cls.PromptInput__sendBtn} 
-          onClick={onSubmit} 
-          type="button"
+          type="submit"
         >
           {aiStore.networkSendPrompt.isLoading 
             ? <Loader size="s" /> 
@@ -53,7 +57,7 @@ const PromptInput = observer(({ value, onChange, onSubmit }: PromptInputProps) =
           }
         </button>
       </div>
-    </div>
+    </form>
   );
 });
 
