@@ -31,6 +31,12 @@ const PromptInput = observer(({ value, onChange, onSubmit }: PromptInputProps) =
         className={cls.PromptInput__textarea}
         value={value}
         onChange={e => onChange(e.target.value)}
+        onKeyDown={e => {
+          if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            onSubmit();
+          }
+        }}
         placeholder="Введите сообщение..."
         rows={1}
       />
