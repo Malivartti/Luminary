@@ -16,8 +16,8 @@ type Props = {
 }
 
 const FileItem: FC<Props> = observer(({ file }) => {
-  const handleClick = useCallback(() => {
-    envPageStore.readFile(file.name);
+  const handleClick = useCallback(async () => {
+    await envPageStore.readFile(file.name);
     envPageStore.setSelectedFile(file.name);
   }, [file]);
 

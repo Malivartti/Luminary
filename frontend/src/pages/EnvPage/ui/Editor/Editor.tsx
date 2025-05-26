@@ -43,9 +43,8 @@ const Editor: FC<Props> = observer(({ className }) => {
     });
 
     quillRef.current.setContents(delta);
-    // envPageStore.setIsOpenFile(false);
     
-  }, [envPageStore.isOpenFile]);
+  }, [envPageStore.selectedFile]);
 
   useEffect(() => {
     const handleClick = (e: Event) => {
